@@ -7,9 +7,12 @@ import scrapy
 
 class SterlingresidentialItem(scrapy.Item):
     # define the fields for your item here like:
-    date =  scrapy.Field()
+    source = scrapy.Field()
+    date = scrapy.Field()
+    title = scrapy.Field()
     building_type = scrapy.Field()
     availability = scrapy.Field()
+    city = scrapy.Field()
     rent = scrapy.Field()
     security_deposit = scrapy.Field()
     bedrooms = scrapy.Field()

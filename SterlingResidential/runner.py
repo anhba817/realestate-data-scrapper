@@ -4,10 +4,12 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
 # Run crawler to get data
+print("SCRAPPING DATA FROM SITES....")
 process = CrawlerProcess(get_project_settings())
-process.crawl('sterlingmgmt')
+process.crawl('actionproperty')
 process.start()
 
+print("UPLOADING TO GOOGLE SHEET")
 # upload to Google Sheet
 scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
          "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
@@ -19,4 +21,4 @@ spreadsheet = client.open('RealEstateData')
 
 with open('results.csv', 'r') as file_obj:
     content = file_obj.read()
-    client.import_csv(spreadsheet.id, data=content)
+    client.import_csv(spreadsheet.id, data=content.encode(encoding='utf-8'))

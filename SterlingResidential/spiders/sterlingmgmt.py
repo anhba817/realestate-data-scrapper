@@ -35,6 +35,7 @@ class WilliamsonSpider(scrapy.Spider):
         units_in_building = values[-1].strip() if values else ''
         yield {
             'date': self.date.strftime("%m/%d/%Y"),
+            'title': response.css('h1.title::text').get().strip(),
             'building_type': building_type,
             'availability': availability,
             'rent': rent,

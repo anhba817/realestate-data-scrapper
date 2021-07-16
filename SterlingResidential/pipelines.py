@@ -6,8 +6,9 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+from scrapy.exceptions import DropItem
 
-import sys 
+import sys
 import os
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 from exporters import MyCsvItemExporter
@@ -17,7 +18,7 @@ class CsvExportPipeline:
         self.csv_file = open('results.csv', 'wb')
         self.exporter = MyCsvItemExporter(
             self.csv_file,
-            fields_to_export=['date', 'building_type', 'availability', 'rent', 'security_deposit', 'bedrooms', 'bathrooms', 'units_in_building', 'address'],
+            fields_to_export=['source', 'date', 'title', 'building_type', 'availability', 'rent', 'security_deposit', 'bedrooms', 'bathrooms', 'units_in_building', 'address'],
         )
         self.exporter.start_exporting()
 
@@ -28,3 +29,23 @@ class CsvExportPipeline:
     def process_item(self, item, spider):
         self.exporter.export_item(item)
         return item
+
+class DuplicatesPipeline:
+    def __init__(self):
+        self.articles_seen = set()
+
+    def process_item(self, item, spider):
+        adapter = ItemAdapter(item)
+        if adapter['title'] in self.articles_seen:
+            raise DropItem(f"Duplicate item found: {item!r}")
+        else:
+            self.articles_seen.add(adapter['title'])
+            return item
+
+class FilterCityPipeline:
+    def process_item(self, item, spider):
+        adapter = ItemAdapter(item)
+        if "Fort St. John" not in adapter['city']:
+            raise DropItem(f"Wrong city: {item!r}")
+        else:
+            return item

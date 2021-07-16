@@ -12,7 +12,7 @@ BOT_NAME = 'SterlingResidential'
 SPIDER_MODULES = ['SterlingResidential.spiders']
 NEWSPIDER_MODULE = 'SterlingResidential.spiders'
 
-
+LOG_LEVEL = 'ERROR'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'SterlingResidential (+http://www.yourdomain.com)'
 
@@ -27,7 +27,7 @@ ROBOTSTXT_OBEY = True
 # See also autothrottle settings and docs
 #DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 4
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
@@ -50,9 +50,9 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'SterlingResidential.middlewares.SterlingresidentialDownloaderMiddleware': 543,
-#}
+# DOWNLOADER_MIDDLEWARES = {
+#      'scrapy_selenium.SeleniumMiddleware': 800
+# }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -63,19 +63,21 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'SterlingResidential.pipelines.CsvExportPipeline': 100,
+   'SterlingResidential.pipelines.DuplicatesPipeline': 100,
+   'SterlingResidential.pipelines.FilterCityPipeline': 200,
+   'SterlingResidential.pipelines.CsvExportPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-# AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 # AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
 #AUTOTHROTTLE_MAX_DELAY = 60
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
-# AUTOTHROTTLE_TARGET_CONCURRENCY = 5.0
+AUTOTHROTTLE_TARGET_CONCURRENCY = 10.0
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 

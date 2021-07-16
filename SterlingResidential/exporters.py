@@ -2,9 +2,12 @@ from scrapy.exporters import CsvItemExporter
 
 class MyCsvItemExporter(CsvItemExporter):
     header_map = {
+        'source': 'Source',
         'date': 'Date',
+        'title': 'Title',
         'building_type': 'Building Type',
         'availability': 'Availability',
+        'city': 'City',
         'rent': 'Rent',
         'security_deposit': 'Security Deposit',
         'bedrooms': 'Bedrooms',
