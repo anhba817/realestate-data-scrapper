@@ -15,6 +15,7 @@ class SterlingresidentialItem(scrapy.Item):
     city = scrapy.Field()
     rent = scrapy.Field()
     security_deposit = scrapy.Field()
+    utilities = scrapy.Field()
     bedrooms = scrapy.Field()
     bathrooms = scrapy.Field()
     units_in_building = scrapy.Field()

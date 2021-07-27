@@ -18,7 +18,7 @@ class CsvExportPipeline:
         self.csv_file = open('results.csv', 'wb')
         self.exporter = MyCsvItemExporter(
             self.csv_file,
-            fields_to_export=['source', 'date', 'title', 'building_type', 'availability', 'rent', 'security_deposit', 'bedrooms', 'bathrooms', 'units_in_building', 'address'],
+            fields_to_export=['source', 'date', 'title', 'building_type', 'availability', 'rent', 'security_deposit', 'utilities', 'bedrooms', 'bathrooms', 'units_in_building', 'address'],
         )
         self.exporter.start_exporting()
 
@@ -47,5 +47,7 @@ class FilterCityPipeline:
         adapter = ItemAdapter(item)
         if "Fort St. John" not in adapter['city']:
             raise DropItem(f"Wrong city: {item!r}")
+        elif adapter['utilities'].lower() != "not included":
+            raise DropItem(f"Utilities is not Not Included: {item!r}")
         else:
             return item

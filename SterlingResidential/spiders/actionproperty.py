@@ -101,6 +101,9 @@ class ActionPropertySpider(scrapy.Spider):
         value = property_list.css('li.property_deposit span.value::text').get()
         deposit = value.strip() if value else ''
 
+        value = property_list.css('li.property_utilities span.value::text').get()
+        utilities = value.strip() if value else ''
+
         value = property_list.css('li.property_bedrooms span.value::text').get()
         bedrooms = value.strip() if value else ''
         value = property_list.css('li.property_bathrooms span.value::text').get()
@@ -114,6 +117,7 @@ class ActionPropertySpider(scrapy.Spider):
             'city': city,
             'rent': "$%s" % price,
             'security_deposit': "$%s" % deposit,
+            'utilities': utilities,
             'bedrooms': bedrooms,
             'bathrooms': bathrooms,
             'units_in_building': '',

@@ -10,6 +10,7 @@ class MyCsvItemExporter(CsvItemExporter):
         'city': 'City',
         'rent': 'Rent',
         'security_deposit': 'Security Deposit',
+        'utilities': 'Utilities',
         'bedrooms': 'Bedrooms',
         'bathrooms': 'Bathrooms',
         'units_in_building': 'Units in Bldg.',
